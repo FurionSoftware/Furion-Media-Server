@@ -13,11 +13,13 @@ import {
   ListItemText,
   makeStyles,
   ThemeProvider,
-  Toolbar,
+  Toolbar, Typography,
   withTheme,
 } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 import styled from "styled-components";
+import {Route, BrowserRouter, Switch } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
 
 const StyledAppBar = styled(AppBar)`
   z-index: 1400;
@@ -37,12 +39,13 @@ const StyledDrawer = styled(Drawer)`
 
 const Content = styled.div`
   flex-grow: 1;
+  padding-left: 210px;
 `;
 
 function App() {
   const [count, setCount] = useState(0);
   return (
-    <div>
+    <BrowserRouter>
       <CssBaseline />
       <div>
         <StyledAppBar variant="outlined" position="fixed" color="inherit">
@@ -64,10 +67,17 @@ function App() {
         </StyledDrawer>
         <Content>
           <Toolbar />
-          <div>this is a test</div>
+          <Switch>
+            <Route path="/dashboard">
+              <Dashboard></Dashboard>
+            </Route>
+            <Route path="/">
+              <Dashboard></Dashboard>
+            </Route>
+          </Switch>
         </Content>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 
