@@ -1,83 +1,100 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
-import {
-  AppBar,
-  Button,
-  createMuiTheme,
-  CssBaseline,
-  Drawer,
-  DrawerProps,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles,
-  ThemeProvider,
-  Toolbar, Typography,
-  withTheme,
-} from "@material-ui/core";
-import { Settings } from "@material-ui/icons";
 import styled from "styled-components";
-import {Route, BrowserRouter, Switch } from "react-router-dom";
+import { Route, BrowserRouter, Switch, useHistory } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-
-const StyledAppBar = styled(AppBar)`
-  z-index: 1400;
+import { Button, Layout, Menu } from "antd";
+import {
+  SettingFilled,
+  SettingOutlined,
+  SettingTwoTone,
+} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import Settings from "./pages/Settings";
+const { Header, Footer, Sider, Content } = Layout;
+const SMenu = styled(Menu)`
+  height: 100%;
 `;
-
-const StyledToolbar = styled(Toolbar)`
+const SNavbar = styled.div`
+  display: flex;
   justify-content: flex-end;
+  align-items: center;
+  height: 100%;
 `;
 
-const StyledDrawer = styled(Drawer)`
-  width: 100px;
-  & .MuiPaper-root {
-    width: 200px;
-  },
-  flex-shrink: 0;
+const SButton = styled(Button)`
+  border: none;
 `;
-
-const Content = styled.div`
-  flex-grow: 1;
-  padding-left: 210px;
-`;
-
 function App() {
-  const [count, setCount] = useState(0);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [sidebarKeys, setSidebarKeys] = useState([]);
+  const history = useHistory();
+
+  function handleNavMenuClick(event: any) {
+    setSelectedKeys(event.key);
+    setSidebarKeys([]);
+  }
+
+  function handleSidebarClick(event: any) {
+    setSidebarKeys(event.key);
+    setSelectedKeys([]);
+  }
+
+  function handleSettingsClick() {
+    history.push("/settings");
+  }
   return (
-    <BrowserRouter>
-      <CssBaseline />
-      <div>
-        <StyledAppBar variant="outlined" position="fixed" color="inherit">
-          <StyledToolbar>
-            <IconButton>
-              <Settings />
-            </IconButton>
-          </StyledToolbar>
-        </StyledAppBar>
-        <StyledDrawer variant="permanent">
-          <Toolbar />
-          <div>
-            <List>
-              <ListItem button>
-                <ListItemText>Home</ListItemText>
-              </ListItem>
-            </List>
-          </div>
-        </StyledDrawer>
+    <Layout style={{ height: "inherit" }}>
+      <Header
+        style={{
+          backgroundColor: "white",
+          padding: 0,
+        }}
+      >
+        <SNavbar>
+          <Menu
+            onClick={handleNavMenuClick}
+            mode="horizontal"
+            selectedKeys={selectedKeys}
+          >
+            <Menu.Item
+              onClick={handleSettingsClick}
+              key="settings"
+              icon={<SettingOutlined />}
+            >
+              Settings
+            </Menu.Item>
+          </Menu>
+        </SNavbar>
+      </Header>
+      <Layout>
+        <Sider>
+          <SMenu
+            theme="light"
+            selectedKeys={sidebarKeys}
+            onClick={handleSidebarClick}
+          >
+            <SMenu.Item key="1">
+              <Link to="/dashboard" onClick={() => setSelectedKeys([])}>
+                Dashboard
+              </Link>
+            </SMenu.Item>
+          </SMenu>
+        </Sider>
         <Content>
-          <Toolbar />
           <Switch>
             <Route path="/dashboard">
-              <Dashboard></Dashboard>
+              <Dashboard />
+            </Route>
+            <Route path="/settings">
+              <Settings />
             </Route>
             <Route path="/">
-              <Dashboard></Dashboard>
+              <Dashboard />
             </Route>
           </Switch>
         </Content>
-      </div>
-    </BrowserRouter>
+      </Layout>
+    </Layout>
   );
 }
 

@@ -6,12 +6,12 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.2",
-    "@material-ui/icons": "^4.11.2",
+    "@ant-design/icons": "^4.3.0",
     "@material-ui/styles": "^4.11.2",
     "@types/axios": "^0.14.0",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",
+    "antd": "^4.9.1",
     "axios": "^0.21.0",
     "normalize.css": "^8.0.1",
     "react": "^17.0.0",
