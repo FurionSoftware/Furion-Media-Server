@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Route, BrowserRouter, Switch, useHistory } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import { Button, Layout, Menu } from "antd";
+import { Button, Divider, Layout, Menu } from "antd";
 import {
+  ReloadOutlined,
   SettingFilled,
   SettingOutlined,
   SettingTwoTone,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import Settings from "./pages/Settings";
+import Library from "./pages/Library";
 const { Header, Footer, Sider, Content } = Layout;
 const SMenu = styled(Menu)`
   height: 100%;
@@ -23,6 +25,11 @@ const SNavbar = styled.div`
 
 const SButton = styled(Button)`
   border: none;
+`;
+
+const SHeader = styled(Layout.Header)`
+  //padding-bottom: 5px !important;
+  background-color: white !important;
 `;
 function App() {
   const [selectedKeys, setSelectedKeys] = useState([]);
@@ -44,14 +51,10 @@ function App() {
   }
   return (
     <Layout style={{ height: "inherit" }}>
-      <Header
-        style={{
-          backgroundColor: "white",
-          padding: 0,
-        }}
-      >
+      <SHeader>
         <SNavbar>
           <Menu
+            theme="light"
             onClick={handleNavMenuClick}
             mode="horizontal"
             selectedKeys={selectedKeys}
@@ -65,7 +68,7 @@ function App() {
             </Menu.Item>
           </Menu>
         </SNavbar>
-      </Header>
+      </SHeader>
       <Layout>
         <Sider>
           <SMenu
@@ -73,17 +76,31 @@ function App() {
             selectedKeys={sidebarKeys}
             onClick={handleSidebarClick}
           >
-            <SMenu.Item key="1">
+            <SMenu.Item key="dashboard">
               <Link to="/dashboard" onClick={() => setSelectedKeys([])}>
                 Dashboard
               </Link>
             </SMenu.Item>
+            <SMenu.Divider />
+            <SMenu.ItemGroup key="libraries" title="Libraries">
+              <SMenu.Item key="2">
+                <Link
+                  to={`/library/movies`}
+                  onClick={() => setSelectedKeys([])}
+                >
+                  Movies
+                </Link>
+              </SMenu.Item>
+            </SMenu.ItemGroup>
           </SMenu>
         </Sider>
         <Content>
           <Switch>
             <Route path="/dashboard">
               <Dashboard />
+            </Route>
+            <Route path="/library/:name">
+              <Library />
             </Route>
             <Route path="/settings">
               <Settings />

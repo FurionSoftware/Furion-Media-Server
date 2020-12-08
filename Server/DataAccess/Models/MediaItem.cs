@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class Movie
+    public class MediaItem
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public int LibraryId { get; set; }
+        public string FilePath { get; set; }
+        public virtual Library Library { get; set; }
     }
 }

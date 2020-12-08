@@ -11,8 +11,9 @@ namespace DataAccess.Models
 {
     public class MediaContext : DbContext
     {
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<MediaItem> MediaItems { get; set; }
         public DbSet<UserSettings> UserSettings { get; set; }
+        public DbSet<Library> Libraries { get; set; }
         public MediaContext()
         {
             Database.EnsureCreated();

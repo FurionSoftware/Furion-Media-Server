@@ -20,15 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ecfb8a1-7062-4294-ab4a-50a086d88905" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/Settings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/API/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/API/Properties/launchSettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ReloadLibraryButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Library.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Dashboard.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +74,7 @@
       <workItem from="1607245978695" duration="676000" />
       <workItem from="1607246664642" duration="345000" />
       <workItem from="1607299713738" duration="13038000" />
+      <workItem from="1607392649389" duration="4471000" />
     </task>
     <servers />
   </component>

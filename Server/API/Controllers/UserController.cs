@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using API.DTO;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public record UpdateUserSettings(string MoviePath);
+    public record UpdateUserSettings(List<LibraryDTO> libraries);
     [Route("api/user")]
     public class UserController : ControllerBase
     {
@@ -22,11 +23,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateUserSettings([FromBody] UpdateUserSettings updateUserSettings)
         {
-            var moviePath = updateUserSettings.MoviePath;
-            if (!Directory.Exists(moviePath))
+            foreach (var library in updateUserSettings.libraries)
             {
-                return BadRequest("The specified movie path is invalid");
+                if (!Directory.Exists(library.FolderPath))
+                {
+                    return BadRequest("The specified folder path is invalid");
+                }
             }
+            
             var userSettings = _context.UserSettings.First();
             userSettings.MoviePath = updateUserSettings.MoviePath;
             await _context.SaveChangesAsync();
@@ -38,16 +42,6 @@ namespace API.Controllers
         public UserSettings GetUserSettings()
         {
             var userSettings = _context.UserSettings.FirstOrDefault();
-            if (userSettings == null)
-            {
-                userSettings = new UserSettings()
-                {
-                    MoviePath = ""
-                };
-                _context.UserSettings.Add(userSettings);
-                _context.SaveChanges();
-                return userSettings;
-            }
             return userSettings;
         }
     }

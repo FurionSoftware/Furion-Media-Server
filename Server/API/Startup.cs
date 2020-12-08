@@ -1,3 +1,5 @@
+using API.DTO;
+using AutoMapper;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +36,23 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
             services.AddDbContext<MediaContext>();
+            var context = new MediaContext();
+            var userSettings = context.UserSettings.FirstOrDefault();
+            if (userSettings == null)
+            {
+                context.UserSettings.Add(new UserSettings()
+                {
+
+                });
+                context.Libraries.Add(new Library()
+                {
+                    Name = "Movies",
+                    CanRemove = false
+                });
+                context.SaveChanges();
+            }
+            context.Dispose()
+            services.AddAutoMapper(typeof(MappingConfig));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
