@@ -14,17 +14,12 @@ namespace DataAccess.Models
         public DbSet<MediaItem> MediaItems { get; set; }
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<Library> Libraries { get; set; }
-        public MediaContext()
-        {
-            Database.EnsureCreated();
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            var dir = Path.GetDirectoryName(path);
-            optionsBuilder.UseSqlite($"Data Source={Path.Combine(dir)}/FurionMediaServer.db");
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var newDir = Directory.CreateDirectory(Path.Combine(directory, "Furion Media Server"));
+            var dbPath = Path.Combine(newDir.FullName, "FurionMediaServer.db");
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
     }
 }

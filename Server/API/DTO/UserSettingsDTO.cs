@@ -5,9 +5,5 @@ using System.Threading.Tasks;
 
 namespace API.DTO
 {
-    public record UserSettingsDTO
-    {
-        public int Id { get; set; }
-        public List<LibraryDTO> Libraries { get; set; }
-    }
+    public record UserSettingsDTO(int Id, List<LibraryDTO> Libraries);
 }

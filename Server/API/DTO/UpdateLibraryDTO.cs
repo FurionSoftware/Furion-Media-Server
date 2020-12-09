@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace API.DTO
 {
-    public record LibraryDTO(int Id, string Name, bool CanRemove, string FolderPath);
+    public record UpdateLibraryDTO(int Id, string Name, string FolderPath);
 }

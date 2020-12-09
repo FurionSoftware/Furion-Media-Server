@@ -14,6 +14,8 @@ namespace API
         {
             CreateMap<UserSettings, UserSettingsDTO>();
             CreateMap<Library, LibraryDTO>();
+            CreateMap<MediaItem, MediaListItemDTO>();
+            CreateMap<Library, LibraryPageDetailDTO>();
         }
 
     }

@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace API.DTO
 {
-    public record LibraryDTO(int Id, string Name, bool CanRemove, string FolderPath);
+    public record MediaListItemDTO(int Id, string Title);
 }
