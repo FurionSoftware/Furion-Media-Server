@@ -2,14 +2,16 @@
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(MediaContext))]
-    partial class MediaContextModelSnapshot : ModelSnapshot
+    [Migration("20201209221406_Add duration and percentage watched")]
+    partial class Adddurationandpercentagewatched
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,14 +46,14 @@ namespace DataAccess.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DurationPlayed")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("FilePath")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("LibraryId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("PercentageWatched")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

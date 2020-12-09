@@ -12,6 +12,8 @@ namespace DataAccess.Models
         public string Title { get; set; }
         public int LibraryId { get; set; }
         public string FilePath { get; set; }
+        public int Duration { get; set; }
+        public int DurationPlayed { get; set; }
         public virtual Library Library { get; set; }
     }
 }

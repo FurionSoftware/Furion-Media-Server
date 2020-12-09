@@ -38,6 +38,7 @@ function MediaCard(props: Props) {
 				<PlayCircleOutlined onClick={handleWatchClick} />,
 			]}
 		>
+			{props.mediaItem.durationPlayed}
 			<Card.Meta title={props.mediaItem.title}></Card.Meta>
 			<MediaEditModal
 				onClose={handleEditClose}
