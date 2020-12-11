@@ -40,11 +40,11 @@ namespace API.Controllers
 
         [Route("mediadata/{mediaId}")]
         [HttpGet]
-        public FileContentResult GetFileData(int mediaId)
+        public FileResult GetFileData(int mediaId)
         {
             var media = _context.MediaItems.First(x => x.Id == mediaId);
             new FileExtensionContentTypeProvider().TryGetContentType(media.FilePath, out string mimeType);
-            return File(System.IO.File.ReadAllBytes(media.FilePath), mimeType);
+            return PhysicalFile(media.FilePath, "application/octet-stream", enableRangeProcessing: true);
         }
 
         [Route("initialduration/{mediaId}")]

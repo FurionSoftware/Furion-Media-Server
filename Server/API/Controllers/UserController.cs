@@ -34,7 +34,8 @@ namespace API.Controllers
             }
             foreach (var library in updateUserSettings.ExistingLibraries.Concat(updateUserSettings.NewLibraries))
             {
-                if (_context.Libraries.Any(x => x.Name.ToUpper() == library.Name.ToUpper()))
+                var existing = _context.Libraries.FirstOrDefault(x => x.Name.ToUpper() == library.Name.ToUpper());
+                if (existing?.Id != library.Id)
                 {
                     return BadRequest($"A library called {library.Name} already exists");
                 }
