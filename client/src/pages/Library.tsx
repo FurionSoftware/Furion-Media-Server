@@ -38,7 +38,8 @@ function Library() {
 
 	useEffect(() => {
 		if (
-			librariesUpdated.id === library.current.id ||
+			(library.current.id &&
+				librariesUpdated.id === library.current.id) ||
 			librariesUpdated.id <= 0
 		) {
 			fetchMedia(library.current.id);

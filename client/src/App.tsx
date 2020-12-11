@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import layoutSlice from "./store/layoutSlice";
 import TopNav from "./components/TopNav";
 import SideNav from "./components/SideNav";
+import WatchMedia from "./pages/WatchMedia";
 const { Header, Footer, Sider, Content } = Layout;
 
 const SHeader = styled(Layout.Header)`
@@ -38,6 +39,9 @@ function App() {
 						</Route>
 						<Route path="/settings">
 							<Settings />
+						</Route>
+						<Route path="/media/watch/:mediaId">
+							<WatchMedia />
 						</Route>
 						<Route path="/">
 							<Dashboard />

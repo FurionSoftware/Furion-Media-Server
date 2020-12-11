@@ -29,12 +29,22 @@ namespace API.Controllers
             return Ok(mediaListItems);
         }
 
-        [Route("filedata")]
+        [Route("item/{mediaId}")]
         [HttpGet]
-        public FileContentResult GetFileFromPath(string filePath)
+        public ActionResult<MediaListItemDTO> GetMediaItem(int mediaId)
         {
-            new FileExtensionContentTypeProvider().TryGetContentType(filePath, out string mimeType);
-            return File(System.IO.File.ReadAllBytes(filePath), mimeType);
+            var mediaItem = _context.MediaItems.First(x => x.Id == mediaId);
+            var mediaItemDto = _mapper.Map<MediaListItemDTO>(mediaItem);
+            return Ok(mediaItemDto);
+        }
+
+        [Route("mediadata/{mediaId}")]
+        [HttpGet]
+        public FileContentResult GetFileData(int mediaId)
+        {
+            var media = _context.MediaItems.First(x => x.Id == mediaId);
+            new FileExtensionContentTypeProvider().TryGetContentType(media.FilePath, out string mimeType);
+            return File(System.IO.File.ReadAllBytes(media.FilePath), mimeType);
         }
 
         [Route("initialduration/{mediaId}")]

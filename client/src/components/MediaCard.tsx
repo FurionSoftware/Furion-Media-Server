@@ -6,6 +6,7 @@ import {
 import { Card } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import MediaListItem from "../models/MediaListItem";
 import MediaEditModal from "./MediaEditModal";
 import WatchMediaModal from "./WatchMediaModal";
@@ -15,7 +16,7 @@ interface Props {
 }
 function MediaCard(props: Props) {
 	const [editOpen, setEditOpen] = useState(false);
-	const [watchOpen, setWatchOpen] = useState(false);
+	const history = useHistory();
 	function handleEditClick() {
 		setEditOpen(true);
 	}
@@ -24,10 +25,7 @@ function MediaCard(props: Props) {
 		setEditOpen(false);
 	}
 	function handleWatchClick() {
-		setWatchOpen(true);
-	}
-	function handleWatchClose() {
-		setWatchOpen(false);
+		history.push(`/media/watch/${props.mediaItem.id}`);
 	}
 	return (
 		<Card
@@ -44,11 +42,6 @@ function MediaCard(props: Props) {
 				onClose={handleEditClose}
 				mediaItem={props.mediaItem}
 				open={editOpen}
-			/>
-			<WatchMediaModal
-				open={watchOpen}
-				onClose={handleWatchClose}
-				mediaItem={props.mediaItem}
 			/>
 		</Card>
 	);
