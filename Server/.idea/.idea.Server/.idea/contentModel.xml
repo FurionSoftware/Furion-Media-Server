@@ -39,11 +39,9 @@
         <e p="WeatherForecast.cs" t="Include" />
         <e p="wwwroot" t="Include">
           <e p="_assets" t="Include">
-            <e p="index.d7b1743e.js" t="Include" />
-            <e p="logo.3b714202.png" t="Include" />
-            <e p="style.0637ccc5.css" t="Include" />
+            <e p="index.9e2ff78e.js" t="Include" />
+            <e p="style.f876fe4b.css" t="Include" />
           </e>
-          <e p="favicon.ico" t="Include" />
           <e p="index.html" t="Include" />
         </e>
       </e>
@@ -51,7 +49,6 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Class1.cs" t="Include" />
         <e p="DataAccess.csproj" t="IncludeRecursive" />
-        <e p="FurionMediaServer.db" t="Include" />
         <e p="Migrations" t="Include">
           <e p="20201203090643_InitialCreate.cs" t="Include" />
           <e p="20201203090643_InitialCreate.Designer.cs" t="Include" />

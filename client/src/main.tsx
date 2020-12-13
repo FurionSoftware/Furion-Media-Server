@@ -18,9 +18,10 @@ function initializeCastApi() {
         receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
         autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
     });
+    cast.framework.setLoggerLevel(cast.framework.LoggerLevel.DEBUG);
 }
 if (process.env.NODE_ENV === "development") {
-    Axios.defaults.baseURL = "https://localhost:44327/api";
+    Axios.defaults.baseURL = "http://localhost:5000/api";
 }
 ReactDOM.render(
     <React.StrictMode>

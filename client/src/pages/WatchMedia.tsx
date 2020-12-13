@@ -1,3 +1,4 @@
+import { PlayCircleOutlined } from "@ant-design/icons";
 import { Button, Modal, PageHeader, Row, Typography } from "antd";
 import Grid from "antd/lib/card/Grid";
 import Axios from "axios";
@@ -22,6 +23,34 @@ const SReactPlayer = styled(ReactPlayer)`
     & video:focus {
         outline: none;
     }
+    & video {
+        //height: auto !important;
+    }
+`;
+
+const STitleRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const SVideoContainer = styled.div`
+    position: relative;
+`;
+
+const SCastOverlay = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    cursor: pointer;
+    color: white;
 `;
 
 interface Params {
@@ -36,22 +65,31 @@ function WatchMedia() {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const videoRef = useRef<ReactPlayer>(null);
     const interval = useRef(0);
+    const currentDuration = useRef(0);
+    const [isCasting, setIsCasting] = useState(false);
     useEffect(() => {
-        cast.framework.CastContext.getInstance().addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (state: any) => {
-            if (state.castState === "CONNECTED") {
-                const mediaInfo = new chrome.cast.media.MediaInfo(`https://localhost:44327/api/media/mediadata/${mediaId}`, "video/mp4");
+        cast.framework.CastContext.getInstance().addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, (state: any) => {
+            if (state.sessionState === "SESSION_STARTED") {
+                const mediaInfo = new chrome.cast.media.MediaInfo(`http://192.168.1.112:5000/api/media/mediadata/${mediaId}`, "video/mp4");
                 const req = new chrome.cast.media.LoadRequest(mediaInfo);
+                req.autoplay = true;
+                req.currentTime = currentDuration.current;
 
-                const session = cast.framework.CastContext.getInstance().getCurrentSession();
-                console.log(session);
+                const session = state.session;
                 session
                     .loadMedia(req)
                     .then((response: any) => {
-                        console.log(response);
+                        setIsCasting(true);
                     })
                     .catch((error: any) => {
                         console.log(error);
                     });
+            }
+            if (state.sessionState === "SESSION_ENDED") {
+                const mediaSession = state.session.getMediaSession();
+                videoRef?.current?.seekTo(mediaSession.currentTime);
+                setPlaying(true);
+                setIsCasting(false);
             }
         });
         Axios.get<MediaListItem>(`/media/item/${+mediaId}`).then((response) => {
@@ -108,13 +146,12 @@ function WatchMedia() {
                 updateProgressReady.current = false;
             });
         }
+        currentDuration.current = state.playedSeconds;
     }
 
     function handleStart() {
-        setTimeout(() => {
-            interval.current = setInterval(() => {
-                updateProgressReady.current = true;
-            }, 5000);
+        interval.current = setInterval(() => {
+            updateProgressReady.current = true;
         }, 5000);
     }
 
@@ -145,22 +182,35 @@ function WatchMedia() {
                                 </Button>
                             </Row>
                         </Modal>
-                        <SReactPlayer
-                            onStart={handleStart}
-                            ref={videoRef}
-                            playing={playing}
-                            width="100%"
-                            height="100%"
-                            onProgress={onProgress}
-                            onDuration={onDuration}
-                            controls
-                            url={`https://localhost:44327/api/media/mediadata/${mediaId}`}
-                        ></SReactPlayer>
+                        <STitleRow>
+                            <Typography.Title level={2}>{mediaItem.title}</Typography.Title>
+                            <div style={{ height: 50, width: 50 }}>
+                                <google-cast-launcher></google-cast-launcher>
+                            </div>
+                        </STitleRow>
+
+                        <SVideoContainer>
+                            <SReactPlayer
+                                onStart={handleStart}
+                                ref={videoRef}
+                                playing={playing && !isCasting}
+                                width="100%"
+                                height="auto"
+                                onProgress={onProgress}
+                                onDuration={onDuration}
+                                controls
+                                url={`http://localhost:5000/api/media/mediadata/${mediaId}`}
+                            ></SReactPlayer>
+                            {isCasting && (
+                                <SCastOverlay>
+                                    You are currently casting. Click to stop
+                                    <PlayCircleOutlined size={40} />
+                                </SCastOverlay>
+                            )}
+                        </SVideoContainer>
                     </>
                 )}
             </PageContainer>
-
-            <google-cast-launcher></google-cast-launcher>
         </SContainer>
     );
 }

@@ -44,7 +44,7 @@ namespace API.Controllers
         {
             var media = _context.MediaItems.First(x => x.Id == mediaId);
             new FileExtensionContentTypeProvider().TryGetContentType(media.FilePath, out string mimeType);
-            return PhysicalFile(media.FilePath, "application/octet-stream", enableRangeProcessing: true);
+            return PhysicalFile(media.FilePath, "application/octet-stream", true);
         }
 
         [Route("initialduration/{mediaId}")]
