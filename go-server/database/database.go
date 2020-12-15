@@ -8,11 +8,12 @@ import (
 )
 
 var dbConnection *gorm.DB
+var ApiKey = ""
 func InitDatabase() {
 	db, err := gorm.Open(sqlite.Open("Furion Media Server.db"), &gorm.Config{
 		SkipDefaultTransaction: true,
 	})
-	if (err != nil) {
+	if err != nil {
 		panic("Failed to connect to database")
 	}
 
@@ -28,6 +29,8 @@ func InitDatabase() {
 		videoDir := filepath.Join(homeDir, "Videos")
 		library := Library{CanRemove: false, FolderPath: videoDir,Name: "Movies"}
 		db.Create(&library)
+	} else {
+		ApiKey = userSettings.MovieDbApiKey
 	}
 
 	dbConnection = db

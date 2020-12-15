@@ -1,8 +1,9 @@
-package controllers
+package handler
 
 type UserSettings struct {
-	Id        int       `json:"id"`
-	Libraries []Library `json:"libraries"`
+	Id            int       `json:"id"`
+	Libraries     []Library `json:"libraries"`
+	MovieDbApiKey string    `json:"movieDbApiKey"`
 }
 
 type Library struct {
@@ -16,6 +17,7 @@ type UpdateUserSettings struct {
 	NewLibraries      []Library `json:"newLibraries"`
 	ExistingLibraries []Library `json:"existingLibraries"`
 	RemovedLibraries  []Library `json:"removedLibraries"`
+	MovieDbApiKey     string    `json:"movieDbApiKey"`
 }
 
 type UpdateLibrary struct {

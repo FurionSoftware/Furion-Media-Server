@@ -1,10 +1,14 @@
 package database
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type UserSettings struct {
 	gorm.Model
 	Id int
+	MovieDbApiKey string
 }
 
 type MediaItem struct {
@@ -15,6 +19,9 @@ type MediaItem struct {
 	FilePath string
 	Duration int
 	DurationPlayed int
+	ReleaseDate *time.Time
+	ThumbnailUrl *string
+	Overview *string
 	Library Library
 }
 

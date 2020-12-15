@@ -1,4 +1,4 @@
-package controllers
+package handler
 
 import (
 	"go-server/database"
@@ -18,7 +18,7 @@ func GetAllLibraryMedia(libraryId int) []MediaListItem {
 func GetMediaItem(mediaId int) MediaListItem {
 	var mediaItem database.MediaItem
 	db := database.GetDatabase()
-	db.First(mediaItem, mediaId)
+	db.First(&mediaItem, mediaId)
 	mediaItemDto := MediaListItem{
 		Id:             mediaItem.Id,
 		Title:          mediaItem.Title,
@@ -32,22 +32,22 @@ func GetMediaItem(mediaId int) MediaListItem {
 func GetFilePath(mediaId int) string {
 	var mediaItem database.MediaItem
 	db := database.GetDatabase()
-	db.First(mediaItem, mediaId)
+	db.First(&mediaItem, mediaId)
 	return mediaItem.FilePath
 }
 
-func SetInitialMediaDuration(mediaId int, duration float32) {
+func SetInitialMediaDuration(mediaId int, duration float64) {
 	var mediaItem database.MediaItem
 	db := database.GetDatabase()
-	db.First(mediaItem, mediaId)
+	db.First(&mediaItem, mediaId)
 	mediaItem.Duration = int(duration)
 	db.Save(&mediaItem)
 }
 
-func UpdatePlayedSeconds(mediaId int, playedSeconds float32) {
+func UpdatePlayedSeconds(mediaId int, playedSeconds float64) {
 	var mediaItem database.MediaItem
 	db := database.GetDatabase()
-	db.First(mediaItem, mediaId)
+	db.First(&mediaItem, mediaId)
 	mediaItem.DurationPlayed = int(playedSeconds)
 	db.Save(&mediaItem)
 }

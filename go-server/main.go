@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"go-server/controllers"
+	"go-server/handler"
 	"go-server/database"
 	"log"
 	"net/http"
@@ -26,19 +26,19 @@ func main() {
 func SetupUserRoutes(r *mux.Router) {
 	r.HandleFunc("/api/user/settings", func(w http.ResponseWriter, req *http.Request) {
 		decoder := json.NewDecoder(req.Body)
-		var updateUserSettings controllers.UpdateUserSettings
+		var updateUserSettings handler.UpdateUserSettings
 		err := decoder.Decode(&updateUserSettings)
 		if err != nil {
 			panic(err)
 		}
-		err = controllers.UpdateSettings(updateUserSettings)
+		err = handler.UpdateSettings(updateUserSettings)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/api/user/settings", func(w http.ResponseWriter, req *http.Request) {
-		settings := controllers.GetUserSettings()
+		settings := handler.GetUserSettings()
 		json.NewEncoder(w).Encode(settings)
 	}).Methods("GET")
 }
@@ -47,33 +47,47 @@ func SetupMediaRoutes(r *mux.Router) {
 	r.HandleFunc("/api/media/allmedia/{libraryId}", func(w http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
 		libraryId, _ := strconv.Atoi(vars["libraryId"])
-		mediaItems := controllers.GetAllLibraryMedia(libraryId)
+		mediaItems := handler.GetAllLibraryMedia(libraryId)
 		json.NewEncoder(w).Encode(mediaItems)
 	}).Methods("GET")
 	r.HandleFunc("/api/media/item/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		mediaId, _ := strconv.Atoi(vars["mediaId"])
-		mediaListItem := controllers.GetMediaItem(mediaId)
+		mediaListItem := handler.GetMediaItem(mediaId)
 		json.NewEncoder(w).Encode(mediaListItem)
 	}).Methods("GET")
 
-	r.HandleFunc("api/media/mediadata/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/api/media/mediadata/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		mediaId, _ := strconv.Atoi(vars["mediaId"])
-		filePath := controllers.GetFilePath(mediaId)
+		filePath := handler.GetFilePath(mediaId)
 		http.ServeFile(w, r, filePath)
 	}).Methods("GET")
+	r.HandleFunc("/api/media/initialduration/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		mediaId, _ := strconv.Atoi(vars["mediaId"])
+		duration, _ := strconv.ParseFloat(r.URL.Query().Get("duration"), 64)
+		handler.SetInitialMediaDuration(mediaId, duration)
+
+	}).Methods("POST")
+	r.HandleFunc("/api/media/updateplayedseconds/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+
+		mediaId, _ := strconv.Atoi(vars["mediaId"])
+		playedSeconds, _ := strconv.ParseFloat(r.URL.Query().Get("playedSeconds"), 64)
+		handler.UpdatePlayedSeconds(mediaId, playedSeconds)
+	}).Methods("POST")
 }
 
 func SetupLibraryRoutes(r *mux.Router) {
 	r.HandleFunc("/api/libraries", func(w http.ResponseWriter, r *http.Request) {
-		libraries := controllers.GetLibraries()
+		libraries := handler.GetLibraries()
 		json.NewEncoder(w).Encode(libraries)
 	}).Methods("GET")
 
 	r.HandleFunc("/api/libraries/{libraryName}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		libraryDetails, err := controllers.GetLibraryPageDetail(vars["libraryName"])
+		libraryDetails, err := handler.GetLibraryPageDetail(vars["libraryName"])
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 		}
@@ -81,6 +95,9 @@ func SetupLibraryRoutes(r *mux.Router) {
 	}).Methods("GET")
 
 	r.HandleFunc("/api/libraries/reload", func(w http.ResponseWriter, r *http.Request) {
-
+		err := handler.ReloadLibraries()
+		if err != nil {
+			http.Error(w, err.Error(), 400)
+		}
 	}).Methods("POST")
 }

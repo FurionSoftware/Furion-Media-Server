@@ -1,4 +1,4 @@
-package controllers
+package handler
 
 import (
 	"errors"
@@ -18,8 +18,9 @@ func GetUserSettings() UserSettings {
 			CanRemove: library.CanRemove, FolderPath: library.FolderPath})
 	}
 	userSettings := UserSettings{
-		Id:        userSettingsEntity.Id,
-		Libraries: librariesDto,
+		Id:            userSettingsEntity.Id,
+		Libraries:     librariesDto,
+		MovieDbApiKey: userSettingsEntity.MovieDbApiKey,
 	}
 	return userSettings
 }
@@ -36,6 +37,10 @@ func UpdateSettings(updateUserSettings UpdateUserSettings) error {
 	}
 
 	db := database.GetDatabase()
+	var userSettings database.UserSettings
+	db.First(&userSettings)
+	userSettings.MovieDbApiKey = updateUserSettings.MovieDbApiKey
+	db.Save(&userSettings)
 	for _, library := range append(updateUserSettings.ExistingLibraries, updateUserSettings.NewLibraries...) {
 		var libraryEntity database.Library
 		result := db.Where(&Library{Name: library.Name}).First(&libraryEntity)
