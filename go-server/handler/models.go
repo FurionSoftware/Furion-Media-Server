@@ -1,5 +1,7 @@
 package handler
 
+import "time"
+
 type UserSettings struct {
 	Id            int       `json:"id"`
 	Libraries     []Library `json:"libraries"`
@@ -27,11 +29,14 @@ type UpdateLibrary struct {
 }
 
 type MediaListItem struct {
-	Id             int    `json:"id"`
-	Title          string `json:"title"`
-	FilePath       string `json:"filePath"`
-	Duration       int    `json:"duration"`
-	DurationPlayed int    `json:"durationPlayed"`
+	Id             int       `json:"id"`
+	Title          string    `json:"title"`
+	FilePath       string    `json:"filePath"`
+	Duration       int       `json:"duration"`
+	DurationPlayed int       `json:"durationPlayed"`
+	ReleaseDate    *time.Time `json:"releaseDate"`
+	ThumbnailUrl   *string    `json:"thumbnailUrl"`
+	Overview       *string    `json:"overview"`
 }
 
 type LibraryPageDetail struct {

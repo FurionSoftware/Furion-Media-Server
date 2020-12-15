@@ -10,7 +10,16 @@ func GetAllLibraryMedia(libraryId int) []MediaListItem {
 	db.Where(&database.MediaItem{LibraryId: libraryId}).Find(&mediaItems)
 	mediaListItems := []MediaListItem{}
 	for _, mediaItem := range mediaItems {
-		mediaListItems = append(mediaListItems, MediaListItem{Id: mediaItem.Id, Title: mediaItem.Title, Duration: mediaItem.Duration, DurationPlayed: mediaItem.DurationPlayed, FilePath: mediaItem.FilePath})
+		mediaListItems = append(mediaListItems, MediaListItem{
+			Id:             mediaItem.Id,
+			Title:          mediaItem.Title,
+			FilePath:       mediaItem.FilePath,
+			Duration:       mediaItem.Duration,
+			DurationPlayed: mediaItem.DurationPlayed,
+			ReleaseDate:    mediaItem.ReleaseDate,
+			ThumbnailUrl:   mediaItem.ThumbnailUrl,
+			Overview:       mediaItem.Overview,
+		})
 	}
 	return mediaListItems
 }

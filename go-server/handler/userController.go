@@ -40,11 +40,12 @@ func UpdateSettings(updateUserSettings UpdateUserSettings) error {
 	var userSettings database.UserSettings
 	db.First(&userSettings)
 	userSettings.MovieDbApiKey = updateUserSettings.MovieDbApiKey
+	database.ApiKey = updateUserSettings.MovieDbApiKey
 	db.Save(&userSettings)
 	for _, library := range append(updateUserSettings.ExistingLibraries, updateUserSettings.NewLibraries...) {
 		var libraryEntity database.Library
 		result := db.Where(&Library{Name: library.Name}).First(&libraryEntity)
-		if result.Error != nil {
+		if result.Error == nil {
 			libraryEntity.FolderPath = library.FolderPath
 			libraryEntity.Name = library.Name
 			db.Save(&libraryEntity)

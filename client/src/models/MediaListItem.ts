@@ -4,4 +4,7 @@ export default interface MediaListItem {
     filePath: string;
     duration: number;
     durationPlayed: number;
+    releaseDate: Date;
+    thumbnailUrl: string
+    overview: string
 }

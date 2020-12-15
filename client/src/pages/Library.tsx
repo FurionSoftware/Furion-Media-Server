@@ -56,7 +56,7 @@ function Library() {
                     <Row gutter={[30, 30]}>
                         <Fragment>
                             {mediaItems.map((item) => (
-                                <Col key={item.id} span={6}>
+                                <Col key={item.id} span={4}>
                                     <MediaCard mediaItem={item} />
                                 </Col>
                             ))}

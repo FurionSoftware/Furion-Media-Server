@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"go-server/handler"
 	"go-server/database"
+	"go-server/handler"
 	"log"
 	"net/http"
 	"strconv"
@@ -69,7 +69,7 @@ func SetupMediaRoutes(r *mux.Router) {
 		duration, _ := strconv.ParseFloat(r.URL.Query().Get("duration"), 64)
 		handler.SetInitialMediaDuration(mediaId, duration)
 
-	}).Methods("POST")
+	}).Methods("GET")
 	r.HandleFunc("/api/media/updateplayedseconds/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 
