@@ -25,11 +25,11 @@ function App() {
 			<SHeader>
 				<TopNav />
 			</SHeader>
-			<Layout>
+			<Layout style={{ height: "inherit" }}>
 				<Sider>
 					<SideNav />
 				</Sider>
-				<Content>
+				<Content style={{ height: "inherit" }}>
 					<Switch>
 						<Route path="/dashboard">
 							<Dashboard />

@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7fba8a5-0a51-42dc-93f2-4ebff025e818" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/utility/profiler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/mediaController.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/mediaController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/userController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/libraryController.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/libraryController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +19,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../../Go" />
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
