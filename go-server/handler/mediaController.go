@@ -24,16 +24,24 @@ func GetAllLibraryMedia(libraryId int) []MediaListItem {
 	return mediaListItems
 }
 
-func GetMediaItem(mediaId int) MediaListItem {
+func GetMediaDetail(mediaId int) MediaDetail {
 	var mediaItem database.MediaItem
 	db := database.GetDatabase()
 	db.First(&mediaItem, mediaId)
-	mediaItemDto := MediaListItem{
+	mediaItemDto := MediaDetail{
 		Id:             mediaItem.Id,
 		Title:          mediaItem.Title,
 		FilePath:       mediaItem.FilePath,
 		Duration:       mediaItem.Duration,
 		DurationPlayed: mediaItem.DurationPlayed,
+		Overview:       mediaItem.Overview,
+		ThumbnailUrl:   mediaItem.ThumbnailUrl,
+		ReleaseDate:    mediaItem.ReleaseDate,
+		Audio:          mediaItem.Audio,
+		Codec:          mediaItem.Codec,
+		Quality:        mediaItem.Quality,
+		Language:       mediaItem.Language,
+		Resolution:     mediaItem.Resolution,
 	}
 	return mediaItemDto
 }

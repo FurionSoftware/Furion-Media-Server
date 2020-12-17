@@ -50,10 +50,10 @@ func SetupMediaRoutes(r *mux.Router) {
 		mediaItems := handler.GetAllLibraryMedia(libraryId)
 		json.NewEncoder(w).Encode(mediaItems)
 	}).Methods("GET")
-	r.HandleFunc("/api/media/item/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/api/media/detail/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		mediaId, _ := strconv.Atoi(vars["mediaId"])
-		mediaListItem := handler.GetMediaItem(mediaId)
+		mediaListItem := handler.GetMediaDetail(mediaId)
 		json.NewEncoder(w).Encode(mediaListItem)
 	}).Methods("GET")
 
@@ -69,10 +69,9 @@ func SetupMediaRoutes(r *mux.Router) {
 		duration, _ := strconv.ParseFloat(r.URL.Query().Get("duration"), 64)
 		handler.SetInitialMediaDuration(mediaId, duration)
 
-	}).Methods("GET")
+	}).Methods("POST")
 	r.HandleFunc("/api/media/updateplayedseconds/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-
 		mediaId, _ := strconv.Atoi(vars["mediaId"])
 		playedSeconds, _ := strconv.ParseFloat(r.URL.Query().Get("playedSeconds"), 64)
 		handler.UpdatePlayedSeconds(mediaId, playedSeconds)
@@ -100,4 +99,10 @@ func SetupLibraryRoutes(r *mux.Router) {
 			http.Error(w, err.Error(), 400)
 		}
 	}).Methods("POST")
+	r.HandleFunc("/api/libraries/recentmedia/{libraryId}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		libraryId, _ := strconv.Atoi(vars["libraryId"])
+		media := handler.GetRecentMedia(libraryId)
+		json.NewEncoder(w).Encode(media)
+	}).Methods("GET")
 }

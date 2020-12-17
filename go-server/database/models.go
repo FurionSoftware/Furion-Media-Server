@@ -22,7 +22,13 @@ type MediaItem struct {
 	ReleaseDate *time.Time
 	ThumbnailUrl *string
 	Overview *string
+	Resolution *string
+	Language *string
+	Quality *string
+	Audio *string
+	Codec *string
 	Library Library
+	UpdatedAt time.Time
 }
 
 type Library struct {

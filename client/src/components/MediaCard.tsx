@@ -3,7 +3,7 @@ import {
 	EllipsisOutlined,
 	PlayCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Image } from "antd";
+import { Card, Dropdown, Image, Menu, Progress } from "antd";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -20,8 +20,31 @@ const SCard = styled(Card)`
 		//padding-right: 0;
 	}
 	& .ant-card-meta-title {
-		white-space: normal;
+		//white-space: normal;
 		max-height: 100px;
+	}
+`;
+
+const SImageContainer = styled.div`
+	width: 180px !important;
+	height: 180px !important;
+	& img {
+		object-fit: cover !important;
+		object-position: top !important;
+		width: 100% !important;
+		height: 100% !important;
+		background-color: lightgray;
+	}
+`;
+
+const SCardMeta = styled(Card.Meta)`
+	font-size: 14px !important;
+`;
+
+const SProgress = styled(Progress)`
+	& .ant-progress-inner {
+		margin-top: -20px !important;
+		border-radius: 0;
 	}
 `;
 
@@ -32,8 +55,11 @@ function MediaCard(props: Props) {
 	const [editOpen, setEditOpen] = useState(false);
 	const history = useHistory();
 
-	function handleEditClick() {
+	function handleEditClick(
+		event: React.MouseEvent<HTMLSpanElement, MouseEvent>
+	) {
 		setEditOpen(true);
+		event.stopPropagation();
 	}
 
 	function handleEditClose() {
@@ -42,26 +68,60 @@ function MediaCard(props: Props) {
 	function handleWatchClick() {
 		history.push(`/media/watch/${props.mediaItem.id}`);
 	}
+	function getDurationPercent() {
+		if (!props.mediaItem.duration || !props.mediaItem.duration) {
+			return 0;
+		}
+		return (
+			(props.mediaItem.durationPlayed / props.mediaItem.duration) * 100
+		);
+	}
+
+	function handleCardClick(
+		event: React.MouseEvent<HTMLDivElement, MouseEvent>
+	) {
+		history.push(`/media/details/${props.mediaItem.id}`);
+		console.log(1);
+	}
+
 	return (
 		<SCard
-			bodyStyle={{ maxWidth: 150 }}
+			onClick={handleCardClick}
+			bordered={false}
+			bodyStyle={{ padding: 12 }}
+			style={{ width: 180 }}
 			hoverable
 			actions={[
-				<EditOutlined key="edit" onClick={handleEditClick} />,
-				<EllipsisOutlined />,
-				<PlayCircleOutlined onClick={handleWatchClick} />,
+				<EditOutlined
+					title="Edit video"
+					key="edit"
+					onClick={handleEditClick}
+				/>,
+				<PlayCircleOutlined
+					title="Watch video"
+					onClick={handleWatchClick}
+				/>,
 			]}
 			cover={
-				<Image
-					width={150}
-					height={225}
-					style={{ backgroundColor: "lightgray" }}
-					fallback={imagePath}
-					src={`https://image.tmdb.org/t/p/w185${props.mediaItem.thumbnailUrl}`}
-				/>
+				<SImageContainer>
+					<img
+						src={
+							props.mediaItem.thumbnailUrl
+								? `https://image.tmdb.org/t/p/w185${props.mediaItem.thumbnailUrl}`
+								: imagePath
+						}
+					/>
+					<SProgress
+						strokeLinecap="square"
+						strokeWidth={4}
+						percent={getDurationPercent()}
+						strokeColor="rgb(255 176 68)"
+						showInfo={false}
+					/>
+				</SImageContainer>
 			}
 		>
-			<Card.Meta title={props.mediaItem.title}></Card.Meta>
+			<SCardMeta title={props.mediaItem.title}></SCardMeta>
 
 			<MediaEditModal
 				onClose={handleEditClose}

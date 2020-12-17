@@ -29,14 +29,30 @@ type UpdateLibrary struct {
 }
 
 type MediaListItem struct {
-	Id             int       `json:"id"`
-	Title          string    `json:"title"`
-	FilePath       string    `json:"filePath"`
-	Duration       int       `json:"duration"`
-	DurationPlayed int       `json:"durationPlayed"`
+	Id             int        `json:"id"`
+	Title          string     `json:"title"`
+	FilePath       string     `json:"filePath"`
+	Duration       int        `json:"duration"`
+	DurationPlayed int        `json:"durationPlayed"`
 	ReleaseDate    *time.Time `json:"releaseDate"`
 	ThumbnailUrl   *string    `json:"thumbnailUrl"`
 	Overview       *string    `json:"overview"`
+}
+
+type MediaDetail struct {
+	Id             int        `json:"id"`
+	Title          string     `json:"title"`
+	FilePath       string     `json:"filePath"`
+	Duration       int        `json:"duration"`
+	DurationPlayed int        `json:"durationPlayed"`
+	ReleaseDate    *time.Time `json:"releaseDate"`
+	ThumbnailUrl   *string    `json:"thumbnailUrl"`
+	Overview       *string    `json:"overview"`
+	Resolution *string
+	Language *string
+	Quality *string
+	Audio *string
+	Codec *string
 }
 
 type LibraryPageDetail struct {

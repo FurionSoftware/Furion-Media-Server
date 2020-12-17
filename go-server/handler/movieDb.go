@@ -5,6 +5,7 @@ import (
 	"go-server/database"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type SearchMovieResult struct {
@@ -23,7 +24,7 @@ type SearchMovieItem struct {
 
 const baseApiUrl = "https://api.themoviedb.org/3"
 
-func SearchMovie(query string) (searchMovieResult SearchMovieResult, err error) {
+func SearchMovie(query string, year *int) (searchMovieResult SearchMovieResult, err error) {
 	req, err := http.NewRequest("GET", baseApiUrl+"/search/movie", nil)
 	if err != nil {
 		log.Println(err)
@@ -32,6 +33,9 @@ func SearchMovie(query string) (searchMovieResult SearchMovieResult, err error) 
 	q := req.URL.Query()
 	q.Add("api_key", database.ApiKey)
 	q.Add("query", query)
+	if year != nil {
+		q.Add("year", strconv.Itoa(*year))
+	}
 	req.URL.RawQuery = q.Encode()
 	resp, err := http.Get(req.URL.String())
 	if err != nil {
@@ -39,5 +43,6 @@ func SearchMovie(query string) (searchMovieResult SearchMovieResult, err error) 
 	}
 	defer resp.Body.Close()
 	json.NewDecoder(resp.Body).Decode(&searchMovieResult)
+
 	return searchMovieResult, nil
 }

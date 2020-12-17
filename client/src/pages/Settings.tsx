@@ -8,7 +8,7 @@ import UpdateUserSettings from "../models/UpdateUserSettings";
 import Library from "../models/Library";
 import PageContainer from "../components/PageContainer";
 
-const SContainer = styled.div`
+const SPageContainer = styled(PageContainer)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -80,52 +80,50 @@ function Settings(props: any) {
 		setApiKey(event.currentTarget.value);
 	}
 	return (
-		<SContainer>
-			<PageContainer loading={!loaded}>
-				<Typography.Title level={2}>Settings</Typography.Title>
-				<Form
-					labelCol={{ span: 6 }}
-					wrapperCol={{ span: 18 }}
-					style={{ width: "100%" }}
-					onFinish={handleSubmit}
-				>
-					{existingLibraries.map((item) => (
-						<Form.Item key={item.id} label={item.name}>
-							<Input
-								onChange={(event) =>
-									handleLibraryValueChange(
-										item.id,
-										event.currentTarget.value
-									)
-								}
-								value={item.folderPath}
-								placeholder="Enter the path to the folder you want to find media from..."
-							/>
-						</Form.Item>
-					))}
-					<Form.Item
-						tooltip="In order to automatically get video information from your files (title, year, poster photo etc) you must provide a registered api key from themoviedb.org"
-						label="MovieDB Api key"
-					>
+		<SPageContainer loading={!loaded}>
+			<Typography.Title level={2}>Settings</Typography.Title>
+			<Form
+				labelCol={{ span: 6 }}
+				wrapperCol={{ span: 18 }}
+				style={{ width: "100%" }}
+				onFinish={handleSubmit}
+			>
+				{existingLibraries.map((item) => (
+					<Form.Item key={item.id} label={item.name}>
 						<Input
-							value={apiKey}
-							onChange={handleApiKeyChange}
-							placeholder="Enter your MovieDB api key"
+							onChange={(event) =>
+								handleLibraryValueChange(
+									item.id,
+									event.currentTarget.value
+								)
+							}
+							value={item.folderPath}
+							placeholder="Enter the path to the folder you want to find media from..."
 						/>
 					</Form.Item>
+				))}
+				<Form.Item
+					tooltip="In order to automatically get video information from your files (title, year, poster photo etc) you must provide a registered api key from themoviedb.org"
+					label="MovieDB Api key"
+				>
+					<Input
+						value={apiKey}
+						onChange={handleApiKeyChange}
+						placeholder="Enter your MovieDB api key"
+					/>
+				</Form.Item>
 
-					<SButtonRow wrapperCol={{ span: 18, offset: 6 }}>
-						<Button
-							htmlType="submit"
-							style={{ width: 200, height: 40 }}
-							type="primary"
-						>
-							Save Changes
-						</Button>
-					</SButtonRow>
-				</Form>
-			</PageContainer>
-		</SContainer>
+				<SButtonRow wrapperCol={{ span: 18, offset: 6 }}>
+					<Button
+						htmlType="submit"
+						style={{ width: 200, height: 40 }}
+						type="primary"
+					>
+						Save Changes
+					</Button>
+				</SButtonRow>
+			</Form>
+		</SPageContainer>
 	);
 }
 

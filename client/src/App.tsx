@@ -13,6 +13,7 @@ import layoutSlice from "./store/layoutSlice";
 import TopNav from "./components/TopNav";
 import SideNav from "./components/SideNav";
 import WatchMedia from "./pages/WatchMedia";
+import MediaDetails from "./pages/MediaDetails";
 const { Header, Footer, Sider, Content } = Layout;
 
 const SHeader = styled(Layout.Header)`
@@ -42,6 +43,9 @@ function App() {
 						</Route>
 						<Route path="/media/watch/:mediaId">
 							<WatchMedia />
+						</Route>
+						<Route path="/media/details/:mediaId">
+							<MediaDetails />
 						</Route>
 						<Route path="/">
 							<Dashboard />

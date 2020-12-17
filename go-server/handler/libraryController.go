@@ -3,11 +3,11 @@ package handler
 import (
 	"errors"
 	"fmt"
+	PTN "github.com/middelink/go-parse-torrent-name"
 	"go-server/database"
 	"gorm.io/gorm"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -45,7 +45,6 @@ func GetLibraryPageDetail(libraryName string) (LibraryPageDetail, error) {
 }
 
 func ReloadLibraries() error {
-	start := time.Now()
 	db := database.GetDatabase()
 	libraries := []database.Library{}
 	db.Where("name is not null and name != ''").Find(&libraries)
@@ -58,7 +57,6 @@ func ReloadLibraries() error {
 	}
 	wg.Wait()
 	close(c)
-	fmt.Println("took " + strconv.FormatInt(time.Since(start).Milliseconds(), 10))
 	for err := range c {
 		if err != nil {
 			return err
@@ -126,7 +124,27 @@ func ProcessLibraryMedia(library database.Library, db *gorm.DB, c chan error, wg
 
 func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *sync.WaitGroup) {
 	defer wg.Done()
-	result, err := SearchMovie(filenameNoExt)
+	searchQuery := filenameNoExt
+	parsed, err := PTN.Parse(filenameNoExt)
+	var year *int
+	if err == nil {
+		if parsed.Title != "" {
+			searchQuery = parsed.Title
+		}
+		if parsed.Year > 0 {
+			year = &parsed.Year
+		}
+		if parsed.Quality != "" {
+			mediaItem.Quality = &parsed.Quality
+		}
+		if parsed.Codec != "" {
+			mediaItem.Codec = &parsed.Codec
+		}
+		if parsed.Audio != "" {
+			mediaItem.Audio = &parsed.Audio
+		}
+	}
+	result, err := SearchMovie(searchQuery, year)
 	if err == nil && len(result.Results) > 0 {
 		mediaItem.Title = result.Results[0].Title
 		releaseDate, err := time.Parse("2006-01-02", result.Results[0].ReleaseDate)
@@ -135,7 +153,26 @@ func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *s
 		}
 		mediaItem.Overview = &result.Results[0].Overview
 		mediaItem.ThumbnailUrl = &result.Results[0].PosterPath
+
 	}
+}
 
-
+func GetRecentMedia(libraryId int) []MediaListItem {
+	db := database.GetDatabase()
+	media := []database.MediaItem{}
+	db.Where("library_id = ? AND duration_played > 10", libraryId).Order("updated_at desc").Limit(10).Find(&media)
+	mediaItems := []MediaListItem{}
+	for _, item := range media {
+		mediaItems = append(mediaItems, MediaListItem{
+			Id:             item.Id,
+			Title:          item.Title,
+			FilePath:       item.FilePath,
+			Duration:       item.Duration,
+			DurationPlayed: item.DurationPlayed,
+			ReleaseDate:    item.ReleaseDate,
+			ThumbnailUrl:   item.ThumbnailUrl,
+			Overview:       item.Overview,
+		})
+	}
+	return mediaItems
 }

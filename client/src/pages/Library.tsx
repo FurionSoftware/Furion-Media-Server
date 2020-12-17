@@ -26,6 +26,7 @@ function Library() {
 	const library = useRef<LibraryPageDetail>({} as LibraryPageDetail);
 	const [loading, setLoading] = useState(true);
 	const [mediaItems, setMediaItems] = useState<MediaListItem[]>([]);
+	const [recentMedia, setRecentMedia] = useState<MediaListItem[]>([]);
 	const { librariesUpdated } = useSelector(
 		(state: RootState) => state.libraryReducer
 	);
@@ -49,10 +50,25 @@ function Library() {
 
 	function fetchMedia(libraryId: number) {
 		setLoading(true);
+		let allMediaDone = false;
+		let recentMediaDone = false;
 		Axios.get<MediaListItem[]>(`/media/allmedia/${libraryId}`).then(
 			(response) => {
 				setMediaItems(response.data);
-				setLoading(false);
+				allMediaDone = true;
+				if (recentMediaDone) {
+					setLoading(false);
+				}
+			}
+		);
+
+		Axios.get<MediaListItem[]>(`/libraries/recentmedia/${libraryId}`).then(
+			(response) => {
+				setRecentMedia(response.data);
+				recentMediaDone = true;
+				if (allMediaDone) {
+					setLoading(false);
+				}
 			}
 		);
 	}
@@ -63,6 +79,23 @@ function Library() {
 				<Typography.Title level={2}>
 					{library.current.name}
 				</Typography.Title>
+				{recentMedia.length > 0 && (
+					<Fragment>
+						<Typography.Title level={3}>
+							Continue Watching
+						</Typography.Title>
+						<Row gutter={[30, 30]}>
+							<Fragment>
+								{recentMedia.map((item) => (
+									<Col key={item.id}>
+										<MediaCard mediaItem={item} />
+									</Col>
+								))}
+							</Fragment>
+						</Row>
+					</Fragment>
+				)}
+				<Typography.Title level={3}>All Media</Typography.Title>
 				<Row gutter={[60, 30]}>
 					<Fragment>
 						{mediaItems.map((item) => (
