@@ -61,8 +61,8 @@ func UpdateSettings(updateUserSettings UpdateUserSettings) error {
 	db.Create(&addedLibraries)
 
 	for _, library := range updateUserSettings.RemovedLibraries {
-		db.Where(&database.MediaItem{LibraryId: library.Id}).Delete(database.MediaItem{})
-		db.Delete(&database.Library{}, library.Id)
+		db.Where(&database.MediaItem{LibraryId: library.Id}).Unscoped().Delete(database.MediaItem{})
+		db.Unscoped().Delete(&database.Library{}, library.Id)
 	}
 	return nil
 }

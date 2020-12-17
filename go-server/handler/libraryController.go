@@ -67,6 +67,7 @@ func ReloadLibraries() error {
 
 func ProcessLibraryMedia(library database.Library, db *gorm.DB, c chan error, wg *sync.WaitGroup) {
 	defer wg.Done()
+	library.FolderPath = strings.ReplaceAll(library.FolderPath,"/", `\`)
 	_, err := os.Stat(library.FolderPath)
 	if os.IsNotExist(err) {
 		c <- errors.New(fmt.Sprintf("Cannot refresh library %s, path not found", library.FolderPath))
@@ -107,15 +108,18 @@ func ProcessLibraryMedia(library database.Library, db *gorm.DB, c chan error, wg
 		}
 	}
 	pathWg.Wait()
-	db.Create(itemsToCreate)
+	if len(itemsToCreate) > 0 {
+		db.Create(itemsToCreate)
+
+	}
 
 	for _, item := range mediaItems {
 		if !strings.HasPrefix(item.FilePath, library.FolderPath) {
-			db.Delete(&item)
+			db.Unscoped().Delete(&item)
 		} else {
 			_, err := os.Stat(item.FilePath)
 			if os.IsNotExist(err) {
-				db.Delete(&item)
+				db.Unscoped().Delete(&item)
 			}
 		}
 	}
