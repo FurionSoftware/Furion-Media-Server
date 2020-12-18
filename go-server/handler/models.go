@@ -48,11 +48,11 @@ type MediaDetail struct {
 	ReleaseDate    *time.Time `json:"releaseDate"`
 	ThumbnailUrl   *string    `json:"thumbnailUrl"`
 	Overview       *string    `json:"overview"`
-	Resolution *string
-	Language *string
-	Quality *string
-	Audio *string
-	Codec *string
+	Resolution     *string    `json:"resolution"`
+	Language       *string    `json:"language"`
+	Quality        *string    `json:"quality"`
+	Audio          *string    `json:"audio"`
+	Codec          *string    `json:"codec"`
 }
 
 type LibraryPageDetail struct {

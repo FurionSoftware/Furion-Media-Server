@@ -20,10 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ecfb8a1-7062-4294-ab4a-50a086d88905" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/ReloadLibraryButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Library.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MediaDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MediaDetails.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,10 +41,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../LogTagOnline-Dev/LogtagOnline.Web" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\Libor\AppData\Roaming\npm\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="C:\Users\Libor\Documents\Programming\Furion-Media-Server\client\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -75,6 +73,8 @@
       <workItem from="1607246664642" duration="345000" />
       <workItem from="1607299713738" duration="13038000" />
       <workItem from="1607392649389" duration="4471000" />
+      <workItem from="1608237016619" duration="140000" />
+      <workItem from="1608260954413" duration="2246000" />
     </task>
     <servers />
   </component>
