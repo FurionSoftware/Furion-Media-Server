@@ -12,8 +12,6 @@ const SContainer = styled.div`
   padding-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
-  width: 100%;
-  height: 100%;
 `;
 
 const STitleRow = styled.div`
@@ -74,7 +72,6 @@ function WatchMedia() {
   return (
     <SContainer>
       <PageContainer
-        style={{ height: "100%" }}
         loading={!Boolean(mediaItem.id)}
       >
         {mediaItem.id > 0 && (

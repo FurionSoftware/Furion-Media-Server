@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"go-server/database"
 	"go-server/handler"
 	"log"
@@ -17,10 +17,13 @@ func main() {
 	SetupUserRoutes(r)
 	SetupMediaRoutes(r)
 	SetupLibraryRoutes(r)
-	originsOk := handlers.AllowedOrigins([]string{"http://localhost:3000", "https://localhost:3001"})
-	methodsOk := handlers.AllowedMethods([]string{"POST", "GET", "HEAD", "OPTIONS"})
-	headersOk := handlers.AllowedHeaders([]string{"Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Accept", "Accept-Language", "Content-Type", "Range"})
-	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(originsOk, methodsOk, headersOk)(r)))
+	//headersOk := handlers.AllowedHeaders([]string{"Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Accept", "Accept-Language", "Content-Type", "Range"})
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedMethods: []string{"POST", "GET", "HEAD", "OPTIONS"},
+	})
+	corsHandler := c.Handler(r)
+	log.Fatal(http.ListenAndServe(":8000", corsHandler))
 }
 
 func SetupUserRoutes(r *mux.Router) {
@@ -76,6 +79,23 @@ func SetupMediaRoutes(r *mux.Router) {
 		playedSeconds, _ := strconv.ParseFloat(r.URL.Query().Get("playedSeconds"), 64)
 		handler.UpdatePlayedSeconds(mediaId, playedSeconds)
 	}).Methods("POST")
+	r.HandleFunc("/api/media/subtitleinfo/{mediaId}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		mediaId, _ := strconv.Atoi(vars["mediaId"])
+		subs := handler.GetMediaSubtitleInfo(mediaId)
+		json.NewEncoder(w).Encode(subs)
+	}).Methods("GET")
+
+	r.HandleFunc("/api/getfile", func(w http.ResponseWriter, r *http.Request) {
+		path := r.URL.Query().Get("filepath")
+		http.ServeFile(w, r, path)
+	})
+	//
+	//r.HandleFunc("/api/getsubtitlefile", func(w http.ResponseWriter, r *http.Request) {
+	//	path := r.URL.Query().Get("filepath")
+	//	filepath := handler.ParseSubtitle(path)
+	//	http.ServeFile(w, r, filepath)
+	//})
 }
 
 func SetupLibraryRoutes(r *mux.Router) {

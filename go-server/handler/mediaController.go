@@ -1,13 +1,19 @@
 package handler
 
 import (
+	"github.com/asticode/go-astisub"
 	"go-server/database"
+	"golang.org/x/text/language"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
 )
 
 func GetAllLibraryMedia(libraryId int) []MediaListItem {
 	mediaItems := []database.MediaItem{}
 	db := database.GetDatabase()
-	db.Where(&database.MediaItem{LibraryId: libraryId}).Find(&mediaItems)
+	db.Where(&database.MediaItem{LibraryId: libraryId}).Find(&mediaItems).Order("updated_at desc")
 	mediaListItems := []MediaListItem{}
 	for _, mediaItem := range mediaItems {
 		mediaListItems = append(mediaListItems, MediaListItem{
@@ -44,6 +50,68 @@ func GetMediaDetail(mediaId int) MediaDetail {
 		Resolution:     mediaItem.Resolution,
 	}
 	return mediaItemDto
+}
+
+func GetMediaSubtitleInfo(mediaId int) []MediaSubtitle {
+	var mediaItem database.MediaItem
+	db := database.GetDatabase()
+	db.First(&mediaItem, mediaId)
+	var library database.Library
+	db.First(&library, mediaItem.LibraryId)
+	subs := []MediaSubtitle{}
+	_ = filepath.Walk(library.FolderPath, func(path string, info os.FileInfo, err error) error {
+		if err == nil {
+			if strings.HasSuffix(path, ".srt") ||
+				strings.HasSuffix(path, ".ttml") ||
+				strings.HasSuffix(path, ".stl") ||
+				strings.HasSuffix(path, ".ssa") ||
+				strings.HasSuffix(path, ".ass") ||
+				strings.HasSuffix(path, ".teletext") {
+				var yearStr string
+				var resolution string
+				var codec string
+				if mediaItem.ReleaseDate != nil {
+					yearStr = strconv.Itoa(mediaItem.ReleaseDate.Year())
+				}
+
+				if mediaItem.Codec != nil {
+					codec = *mediaItem.Codec
+				}
+
+				if mediaItem.Resolution != nil {
+					resolution = *mediaItem.Resolution
+				}
+
+				if strings.Contains(path, mediaItem.Title) && strings.Contains(path, yearStr) && strings.Contains(path, resolution) && strings.Contains(path, codec) {
+					s1, _ := astisub.OpenFile(path)
+					newPath := strings.TrimSuffix(path, filepath.Ext(path))
+					newPath += ".vtt"
+					f, _ := os.Create(newPath)
+					s1.WriteToWebVTT(f)
+					lang := "en"
+					if s1.Metadata != nil {
+						lang = s1.Metadata.Language
+					} else {
+						split := strings.Split(path, ".")
+						if len(split) > 1 {
+							tag, err := language.Parse(split[len(split)-2])
+							if err != nil {
+								lang = strings.ToLower(tag.String())
+							}
+						}
+					}
+					subs = append(subs, MediaSubtitle{
+						FilePath: newPath,
+						Language: lang,
+					})
+				} else if strings.HasSuffix(path, ".vtt") {
+
+				}
+			}
+		}
+		return err
+	})
+	return subs
 }
 
 func GetFilePath(mediaId int) string {

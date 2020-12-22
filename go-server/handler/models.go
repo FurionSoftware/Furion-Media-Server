@@ -15,6 +15,11 @@ type Library struct {
 	FolderPath string `json:"folderPath"`
 }
 
+type MediaSubtitle struct {
+	FilePath string `json:"filePath"`
+	Language string `json:"region"`
+}
+
 type UpdateUserSettings struct {
 	NewLibraries      []Library `json:"newLibraries"`
 	ExistingLibraries []Library `json:"existingLibraries"`
