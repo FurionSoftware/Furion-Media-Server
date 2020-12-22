@@ -17,7 +17,7 @@ type Library struct {
 
 type MediaSubtitle struct {
 	FilePath string `json:"filePath"`
-	Language string `json:"region"`
+	Language string `json:"language"`
 }
 
 type UpdateUserSettings struct {

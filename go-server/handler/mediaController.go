@@ -3,10 +3,8 @@ package handler
 import (
 	"github.com/asticode/go-astisub"
 	"go-server/database"
-	"golang.org/x/text/language"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -59,58 +57,34 @@ func GetMediaSubtitleInfo(mediaId int) []MediaSubtitle {
 	var library database.Library
 	db.First(&library, mediaItem.LibraryId)
 	subs := []MediaSubtitle{}
-	_ = filepath.Walk(library.FolderPath, func(path string, info os.FileInfo, err error) error {
-		if err == nil {
-			if strings.HasSuffix(path, ".srt") ||
-				strings.HasSuffix(path, ".ttml") ||
-				strings.HasSuffix(path, ".stl") ||
-				strings.HasSuffix(path, ".ssa") ||
-				strings.HasSuffix(path, ".ass") ||
-				strings.HasSuffix(path, ".teletext") {
-				var yearStr string
-				var resolution string
-				var codec string
-				if mediaItem.ReleaseDate != nil {
-					yearStr = strconv.Itoa(mediaItem.ReleaseDate.Year())
-				}
+	if filepath.Dir(mediaItem.FilePath) != filepath.Dir(library.FolderPath) {
+		_ = filepath.Walk(filepath.Dir(mediaItem.FilePath), func(path string, info os.FileInfo, err error) error {
+			if err == nil {
+				if strings.HasSuffix(path, ".srt") ||
+					strings.HasSuffix(path, ".ttml") ||
+					strings.HasSuffix(path, ".stl") ||
+					strings.HasSuffix(path, ".ssa") ||
+					strings.HasSuffix(path, ".ass") ||
+					strings.HasSuffix(path, ".teletext") {
 
-				if mediaItem.Codec != nil {
-					codec = *mediaItem.Codec
-				}
-
-				if mediaItem.Resolution != nil {
-					resolution = *mediaItem.Resolution
-				}
-
-				if strings.Contains(path, mediaItem.Title) && strings.Contains(path, yearStr) && strings.Contains(path, resolution) && strings.Contains(path, codec) {
-					s1, _ := astisub.OpenFile(path)
-					newPath := strings.TrimSuffix(path, filepath.Ext(path))
+					newPath := path
 					newPath += ".vtt"
-					f, _ := os.Create(newPath)
-					s1.WriteToWebVTT(f)
-					lang := "en"
-					if s1.Metadata != nil {
-						lang = s1.Metadata.Language
-					} else {
-						split := strings.Split(path, ".")
-						if len(split) > 1 {
-							tag, err := language.Parse(split[len(split)-2])
-							if err != nil {
-								lang = strings.ToLower(tag.String())
-							}
-						}
+					_, err := os.Stat(newPath)
+					if os.IsNotExist(err) {
+						s1, _ := astisub.OpenFile(path)
+						f, _ := os.Create(newPath)
+						s1.WriteToWebVTT(f)
 					}
 					subs = append(subs, MediaSubtitle{
 						FilePath: newPath,
-						Language: lang,
+						Language: filepath.Base(strings.TrimSuffix(newPath, ".vtt")),
 					})
-				} else if strings.HasSuffix(path, ".vtt") {
-
 				}
 			}
-		}
-		return err
-	})
+			return err
+		})
+	}
+
 	return subs
 }
 

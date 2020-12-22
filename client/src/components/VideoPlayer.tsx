@@ -17,6 +17,9 @@ const SVideo = styled.video`
   max-height: 89vh;
   outline: none;
   background-color: black;
+  &::cue {
+    font-family: Arial, serif;
+  }
 `;
 
 const SCastOverlay = styled.div`
@@ -146,15 +149,7 @@ export default function VideoPlayer(props: Props) {
   }
 
   function endSession() {
-    const mediaSession = cast.framework.CastContext.getInstance()
-      .getCurrentSession()
-      .getMediaSession();
     cast.framework.CastContext.getInstance().getCurrentSession().endSession();
-    // mediaSession.getStatus().then(() => {
-    //   videoRef.current.currentTime = mediaSession.getEstimatedTime();
-    //
-    //   videoRef.current.play();
-    // })
   }
 
   function onProgress(event: React.SyntheticEvent<HTMLVideoElement, Event>) {

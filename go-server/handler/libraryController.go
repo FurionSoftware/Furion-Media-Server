@@ -147,6 +147,9 @@ func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *s
 		if parsed.Audio != "" {
 			mediaItem.Audio = &parsed.Audio
 		}
+		if parsed.Resolution != "" {
+			mediaItem.Resolution = &parsed.Resolution
+		}
 	}
 	result, err := SearchMovie(searchQuery, year)
 	if err == nil && len(result.Results) > 0 {
@@ -157,7 +160,7 @@ func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *s
 		}
 		mediaItem.Overview = &result.Results[0].Overview
 		mediaItem.ThumbnailUrl = &result.Results[0].PosterPath
-
+		mediaItem.Duration = result.Results[0].Runtime
 	}
 }
 

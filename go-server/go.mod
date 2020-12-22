@@ -6,7 +6,6 @@ require (
 	github.com/asticode/go-astikit v0.13.0 // indirect
 	github.com/asticode/go-astisub v0.12.0
 	github.com/asticode/go-astits v1.6.1 // indirect
-	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/middelink/go-parse-torrent-name v0.0.0-20190301154245-3ff4efacd4c4
 	github.com/rs/cors v1.7.0
