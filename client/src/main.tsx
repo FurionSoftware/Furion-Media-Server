@@ -10,15 +10,15 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 
 if (process.env.NODE_ENV === "development") {
-    Axios.defaults.baseURL = "http://localhost:8000/api";
+  Axios.defaults.baseURL = "http://localhost:8000/api";
 }
 ReactDOM.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById("root")
 );

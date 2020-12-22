@@ -31,6 +31,12 @@ type MediaItem struct {
 	UpdatedAt time.Time
 }
 
+type MediaSubtitle struct {
+	gorm.Model
+	Id int
+	
+}
+
 type Library struct {
 	gorm.Model
 	Id int
