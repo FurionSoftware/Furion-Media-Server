@@ -1,24 +1,12 @@
 import { Button, Modal, PageHeader, Row, Typography } from "antd";
 import Axios from "axios";
 import moment from "moment";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import PageContainer from "../components/PageContainer";
 import MediaDetail from "../models/MediaDetail";
 import VideoPlayer from "../components/VideoPlayer";
-
-const SContainer = styled.div`
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const STitleRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+import { SContainer, STitleRow } from "./WatchMedia.styled";
 
 interface Params {
   mediaId: string;
@@ -71,9 +59,7 @@ function WatchMedia() {
 
   return (
     <SContainer>
-      <PageContainer
-        loading={!Boolean(mediaItem.id)}
-      >
+      <PageContainer loading={!Boolean(mediaItem.id)}>
         {mediaItem.id > 0 && (
           <>
             <Modal

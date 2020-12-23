@@ -20,14 +20,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ecfb8a1-7062-4294-ab4a-50a086d88905" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/MediaCard.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SideNav.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TopNav.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/VideoPlayer.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Library.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/MediaDetails.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Settings.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/WatchMedia.styled.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MediaCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MediaCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PageContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PageContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SideNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SideNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNav.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VideoPlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VideoPlayer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Library.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Library.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MediaDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MediaDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-server/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-server/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-server/handler/mediaController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/handler/mediaController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../go-server/handler/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/handler/models.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Settings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/WatchMedia.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/WatchMedia.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +97,7 @@
       <workItem from="1608494327321" duration="223000" />
       <workItem from="1608588894627" duration="16901000" />
       <workItem from="1608619898177" duration="11226000" />
-      <workItem from="1608674031733" duration="4973000" />
+      <workItem from="1608674031733" duration="7792000" />
     </task>
     <servers />
   </component>
