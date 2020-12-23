@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import PageContainer from "../components/PageContainer";
-import { Tag } from "antd";
+import { Tag, Typography } from "antd";
 import MediaCard from "../components/MediaCard";
 
 export const SPageContainer = styled(PageContainer)`
@@ -24,4 +24,8 @@ export const SResolutionTag = styled(Tag)`
 
 export const SMediaCard = styled(MediaCard)`
   margin-right: 10px !important;
+`;
+
+export const SOverview = styled(Typography.Paragraph)`
+  padding-top: 10px;
 `;

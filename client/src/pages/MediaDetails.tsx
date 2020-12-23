@@ -7,6 +7,7 @@ import PageContainer from "../components/PageContainer";
 import MediaDetail from "../models/MediaDetail";
 import {
   SMediaCard,
+  SOverview,
   SPageContainer,
   SResolutionTag,
   SVideoMeta,
@@ -62,11 +63,9 @@ function MediaDetails() {
               <Tag color="orange">{mediaDetail.audio}</Tag>
             )}
           </div>
-          <Typography.Paragraph style={{ marginTop: "auto" }}>
-            {mediaDetail.overview}
-          </Typography.Paragraph>
         </SVideoMeta>
       </div>
+      <SOverview>{mediaDetail.overview}</SOverview>
     </SPageContainer>
   );
 }
