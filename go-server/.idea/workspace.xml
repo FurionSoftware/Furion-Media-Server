@@ -2,14 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7fba8a5-0a51-42dc-93f2-4ebff025e818" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../client/src/components/nav/SearchBar.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/src/components/nav/SearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/components/ReloadLibraryButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/nav/ReloadLibraryButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/components/SideNav.styled.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/nav/SideNav.styled.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/components/SideNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/nav/SideNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/components/TopNav.styled.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/nav/TopNav.styled.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/components/TopNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/components/nav/TopNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/pages/MediaDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/pages/MediaDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/entity/models.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/libraryController.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/libraryController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/mediaController.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/mediaController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/movieDb.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/movieDb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/movieDb.go" beforeDir="false" afterPath="$PROJECT_DIR$/moviedb/movieDb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/userController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +53,13 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Libor\Documents\Programming\Furion-Media-Server\go-server\entity" />
+      <recent name="C:\Users\Libor\Documents\Programming\Furion-Media-Server\go-server\movie-db" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="go build go-server main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">

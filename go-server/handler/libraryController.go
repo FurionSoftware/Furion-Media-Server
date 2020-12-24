@@ -5,6 +5,8 @@ import (
 	"fmt"
 	PTN "github.com/middelink/go-parse-torrent-name"
 	"go-server/database"
+	"go-server/entity"
+	"go-server/moviedb"
 	"gorm.io/gorm"
 	"os"
 	"path/filepath"
@@ -15,7 +17,7 @@ import (
 
 func GetLibraries() []Library {
 	db := database.GetDatabase()
-	libraryEntities := []database.Library{}
+	libraryEntities := []entity.Library{}
 	db.Find(&libraryEntities)
 	var libraries []Library
 	for _, library := range libraryEntities {
@@ -31,7 +33,7 @@ func GetLibraries() []Library {
 
 func GetLibraryPageDetail(libraryName string) (LibraryPageDetail, error) {
 	db := database.GetDatabase()
-	var library database.Library
+	var library entity.Library
 	result := db.Where("upper(name) = ?", strings.ToUpper(libraryName)).First(&library)
 	if result.Error == nil {
 		pageDetail := LibraryPageDetail{
@@ -46,7 +48,7 @@ func GetLibraryPageDetail(libraryName string) (LibraryPageDetail, error) {
 
 func ReloadLibraries() error {
 	db := database.GetDatabase()
-	libraries := []database.Library{}
+	libraries := []entity.Library{}
 	db.Where("name is not null and name != ''").Find(&libraries)
 
 	var wg sync.WaitGroup
@@ -65,7 +67,7 @@ func ReloadLibraries() error {
 	return nil
 }
 
-func ProcessLibraryMedia(library database.Library, db *gorm.DB, c chan error, wg *sync.WaitGroup) {
+func ProcessLibraryMedia(library entity.Library, db *gorm.DB, c chan error, wg *sync.WaitGroup) {
 	defer wg.Done()
 	library.FolderPath = strings.ReplaceAll(library.FolderPath,"/", `\`)
 	_, err := os.Stat(library.FolderPath)
@@ -87,17 +89,17 @@ func ProcessLibraryMedia(library database.Library, db *gorm.DB, c chan error, wg
 		c <- err
 		return
 	}
-	mediaItems := []database.MediaItem{}
-	db.Where(&database.MediaItem{LibraryId: library.Id}).Find(&mediaItems)
-	itemsToCreate := []*database.MediaItem{}
+	mediaItems := []entity.MediaItem{}
+	db.Where(&entity.MediaItem{LibraryId: library.Id}).Find(&mediaItems)
+	itemsToCreate := []*entity.MediaItem{}
 	var pathWg sync.WaitGroup
 	for _, path := range filePaths {
-		matchingMedia := []database.MediaItem{}
-		db.Where(&database.MediaItem{FilePath: path}).Find(&matchingMedia)
+		matchingMedia := []entity.MediaItem{}
+		db.Where(&entity.MediaItem{FilePath: path}).Find(&matchingMedia)
 		if len(matchingMedia) == 0 {
 			filename := filepath.Base(path)
 			basename := strings.TrimSuffix(filename, filepath.Ext(filename))
-			mediaItem := database.MediaItem{
+			mediaItem := entity.MediaItem{
 				Title:     basename,
 				LibraryId: library.Id,
 				FilePath:  path,
@@ -126,7 +128,7 @@ func ProcessLibraryMedia(library database.Library, db *gorm.DB, c chan error, wg
 	c <- nil
 }
 
-func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *sync.WaitGroup) {
+func SetMediaMetadata(filenameNoExt string, mediaItem *entity.MediaItem, wg *sync.WaitGroup) {
 	defer wg.Done()
 	searchQuery := filenameNoExt
 	parsed, err := PTN.Parse(filenameNoExt)
@@ -151,7 +153,7 @@ func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *s
 			mediaItem.Resolution = &parsed.Resolution
 		}
 	}
-	result, err := SearchMovie(searchQuery, year)
+	result, err := moviedb.SearchMovie(searchQuery, year)
 	if err == nil && len(result.Results) > 0 {
 		mediaItem.Title = result.Results[0].Title
 		releaseDate, err := time.Parse("2006-01-02", result.Results[0].ReleaseDate)
@@ -161,12 +163,19 @@ func SetMediaMetadata(filenameNoExt string, mediaItem *database.MediaItem, wg *s
 		mediaItem.Overview = &result.Results[0].Overview
 		mediaItem.ThumbnailUrl = &result.Results[0].PosterPath
 		mediaItem.Duration = result.Results[0].Runtime
+		genres := []entity.Genre{}
+		for _, id := range result.Results[0].GenreIds {
+			genres = append(genres, entity.Genre{
+				Id:    id,
+			})
+		}
+		mediaItem.Genres = genres
 	}
 }
 
 func GetRecentMedia(libraryId int) []MediaListItem {
 	db := database.GetDatabase()
-	media := []database.MediaItem{}
+	media := []entity.MediaItem{}
 	db.Where("library_id = ? AND duration_played > 10", libraryId).Order("updated_at desc").Limit(10).Find(&media)
 	mediaItems := []MediaListItem{}
 	for _, item := range media {

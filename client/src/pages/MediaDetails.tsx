@@ -1,7 +1,7 @@
 import { Button, Col, Row, Tag, Typography } from "antd";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import PageContainer from "../components/PageContainer";
 import MediaDetail from "../models/MediaDetail";
@@ -23,6 +23,7 @@ function MediaDetails() {
   const [mediaDetail, setMediaDetail] = useState<MediaDetail>(
     {} as MediaDetail
   );
+  const location = useLocation();
   useEffect(() => {
     Axios.get<MediaDetail>(`/media/detail/${mediaId}`).then((response) => {
       if (response.data.releaseDate) {
@@ -31,7 +32,7 @@ function MediaDetails() {
 
       setMediaDetail(response.data);
     });
-  }, []);
+  }, [location.pathname]);
 
   return (
     <SPageContainer>

@@ -4,10 +4,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import layoutSlice from "../store/layoutSlice";
-import { RootState } from "../store/store";
+import layoutSlice from "../../store/layoutSlice";
+import { RootState } from "../../store/store";
 import ReloadLibraryButton from "./ReloadLibraryButton";
-import { SNavbar } from "./TopNav.styled";
+import { SNavbar, SRightContainer } from "./TopNav.styled";
+import SearchBar from "./SearchBar";
 
 function TopNav() {
   const history = useHistory();
@@ -24,21 +25,24 @@ function TopNav() {
   }
   return (
     <SNavbar>
-      <ReloadLibraryButton />
-      <Menu
-        theme="light"
-        onClick={handleMenuClick}
-        mode="horizontal"
-        selectedKeys={selectedNavKeys}
-      >
-        <Menu.Item
-          onClick={handleSettingsClick}
-          key="navSettings"
-          icon={<SettingOutlined />}
+      <SearchBar />
+      <SRightContainer>
+        <ReloadLibraryButton />
+        <Menu
+          theme="light"
+          onClick={handleMenuClick}
+          mode="horizontal"
+          selectedKeys={selectedNavKeys}
         >
-          Settings
-        </Menu.Item>
-      </Menu>
+          <Menu.Item
+            onClick={handleSettingsClick}
+            key="navSettings"
+            icon={<SettingOutlined />}
+          >
+            Settings
+          </Menu.Item>
+        </Menu>
+      </SRightContainer>
     </SNavbar>
   );
 }

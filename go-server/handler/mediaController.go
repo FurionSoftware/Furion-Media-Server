@@ -3,15 +3,17 @@ package handler
 import (
 	"github.com/asticode/go-astisub"
 	"go-server/database"
+	"go-server/entity"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
 func GetAllLibraryMedia(libraryId int) []MediaListItem {
-	mediaItems := []database.MediaItem{}
+	mediaItems := []entity.MediaItem{}
 	db := database.GetDatabase()
-	db.Where(&database.MediaItem{LibraryId: libraryId}).Find(&mediaItems).Order("updated_at desc")
+	db.Where(&entity.MediaItem{LibraryId: libraryId}).Order("created_at desc").Find(&mediaItems)
 	mediaListItems := []MediaListItem{}
 	for _, mediaItem := range mediaItems {
 		mediaListItems = append(mediaListItems, MediaListItem{
@@ -29,7 +31,7 @@ func GetAllLibraryMedia(libraryId int) []MediaListItem {
 }
 
 func GetMediaDetail(mediaId int) MediaDetail {
-	var mediaItem database.MediaItem
+	var mediaItem entity.MediaItem
 	db := database.GetDatabase()
 	db.First(&mediaItem, mediaId)
 	mediaItemDto := MediaDetail{
@@ -51,10 +53,10 @@ func GetMediaDetail(mediaId int) MediaDetail {
 }
 
 func GetMediaSubtitleInfo(mediaId int) []MediaSubtitle {
-	var mediaItem database.MediaItem
+	var mediaItem entity.MediaItem
 	db := database.GetDatabase()
 	db.First(&mediaItem, mediaId)
-	var library database.Library
+	var library entity.Library
 	db.First(&library, mediaItem.LibraryId)
 	subs := []MediaSubtitle{}
 	if filepath.Dir(mediaItem.FilePath) != filepath.Dir(library.FolderPath) {
@@ -89,14 +91,14 @@ func GetMediaSubtitleInfo(mediaId int) []MediaSubtitle {
 }
 
 func GetFilePath(mediaId int) string {
-	var mediaItem database.MediaItem
+	var mediaItem entity.MediaItem
 	db := database.GetDatabase()
 	db.First(&mediaItem, mediaId)
 	return mediaItem.FilePath
 }
 
 func SetInitialMediaDuration(mediaId int, duration float64) {
-	var mediaItem database.MediaItem
+	var mediaItem entity.MediaItem
 	db := database.GetDatabase()
 	db.First(&mediaItem, mediaId)
 	mediaItem.Duration = int(duration)
@@ -104,9 +106,32 @@ func SetInitialMediaDuration(mediaId int, duration float64) {
 }
 
 func UpdatePlayedSeconds(mediaId int, playedSeconds float64) {
-	var mediaItem database.MediaItem
+	var mediaItem entity.MediaItem
 	db := database.GetDatabase()
 	db.First(&mediaItem, mediaId)
 	mediaItem.DurationPlayed = int(playedSeconds)
 	db.Save(&mediaItem)
+}
+
+func SearchMedia(query string) []MediaListItem {
+	items := []MediaListItem{}
+	ent := []entity.MediaItem{}
+	db := database.GetDatabase()
+	err := db.Where("title LIKE ? OR strftime('%Y', release_date) LIKE ?", "%" + query + "%", "%" + query + "%").Find(&ent)
+	if err.Error != nil {
+		log.Println(err)
+	}
+	for _, item := range ent {
+		items = append(items, MediaListItem{
+			Id:             item.Id,
+			Title:          item.Title,
+			FilePath:       item.FilePath,
+			Duration:       item.Duration,
+			DurationPlayed: item.DurationPlayed,
+			ReleaseDate:    item.ReleaseDate,
+			ThumbnailUrl:   item.ThumbnailUrl,
+			Overview:       item.Overview,
+		})
+	}
+	return items
 }

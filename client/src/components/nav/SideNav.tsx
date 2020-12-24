@@ -2,9 +2,9 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Library from "../models/Library";
-import layoutSlice from "../store/layoutSlice";
-import { RootState } from "../store/store";
+import Library from "../../models/Library";
+import layoutSlice from "../../store/layoutSlice";
+import { RootState } from "../../store/store";
 import { SMenu } from "./SideNav.styled";
 
 function SideNav() {

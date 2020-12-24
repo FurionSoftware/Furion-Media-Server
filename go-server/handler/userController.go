@@ -3,14 +3,16 @@ package handler
 import (
 	"errors"
 	"go-server/database"
+	"go-server/entity"
+	"go-server/moviedb"
 	"os"
 )
 
 func GetUserSettings() UserSettings {
 	db := database.GetDatabase()
-	var userSettingsEntity database.UserSettings
+	var userSettingsEntity entity.UserSettings
 	db.First(&userSettingsEntity)
-	var libraries []database.Library
+	var libraries []entity.Library
 	db.Find(&libraries)
 	var librariesDto []Library
 	for _, library := range libraries {
@@ -37,13 +39,13 @@ func UpdateSettings(updateUserSettings UpdateUserSettings) error {
 	}
 
 	db := database.GetDatabase()
-	var userSettings database.UserSettings
+	var userSettings entity.UserSettings
 	db.First(&userSettings)
 	userSettings.MovieDbApiKey = updateUserSettings.MovieDbApiKey
-	database.ApiKey = updateUserSettings.MovieDbApiKey
+	moviedb.ApiKey = updateUserSettings.MovieDbApiKey
 	db.Save(&userSettings)
 	for _, library := range append(updateUserSettings.ExistingLibraries, updateUserSettings.NewLibraries...) {
-		var libraryEntity database.Library
+		var libraryEntity entity.Library
 		result := db.Where(&Library{Name: library.Name}).First(&libraryEntity)
 		if result.Error == nil {
 			libraryEntity.FolderPath = library.FolderPath
@@ -54,15 +56,15 @@ func UpdateSettings(updateUserSettings UpdateUserSettings) error {
 		}
 	}
 
-	addedLibraries := []database.Library{}
+	addedLibraries := []entity.Library{}
 	for _, library := range updateUserSettings.NewLibraries {
-		addedLibraries = append(addedLibraries, database.Library{Name: library.Name, FolderPath: library.FolderPath, CanRemove: true})
+		addedLibraries = append(addedLibraries, entity.Library{Name: library.Name, FolderPath: library.FolderPath, CanRemove: true})
 	}
 	db.Create(&addedLibraries)
 
 	for _, library := range updateUserSettings.RemovedLibraries {
-		db.Where(&database.MediaItem{LibraryId: library.Id}).Unscoped().Delete(database.MediaItem{})
-		db.Unscoped().Delete(&database.Library{}, library.Id)
+		db.Where(&entity.MediaItem{LibraryId: library.Id}).Unscoped().Delete(entity.MediaItem{})
+		db.Unscoped().Delete(&entity.Library{}, library.Id)
 	}
 	return nil
 }

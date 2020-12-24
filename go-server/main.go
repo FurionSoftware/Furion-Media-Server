@@ -90,6 +90,11 @@ func SetupMediaRoutes(r *mux.Router) {
 		path := r.URL.Query().Get("filepath")
 		http.ServeFile(w, r, path)
 	})
+	r.HandleFunc("/api/media/search", func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query().Get("query")
+		res := handler.SearchMedia(query)
+		json.NewEncoder(w).Encode(res)
+	})
 	//
 	//r.HandleFunc("/api/getsubtitlefile", func(w http.ResponseWriter, r *http.Request) {
 	//	path := r.URL.Query().Get("filepath")

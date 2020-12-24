@@ -20,9 +20,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ecfb8a1-7062-4294-ab4a-50a086d88905" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/nav/SearchBar.styled.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/nav/SearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MediaDetails.styled.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MediaDetails.styled.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ReloadLibraryButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/nav/ReloadLibraryButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SideNav.styled.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/nav/SideNav.styled.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SideNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/nav/SideNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopNav.styled.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/nav/TopNav.styled.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/nav/TopNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MediaDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MediaDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/database/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/entity/models.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/handler/libraryController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/handler/libraryController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/handler/mediaController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/handler/mediaController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/handler/movieDb.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/moviedb/movieDb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/handler/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/handler/userController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../go-server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../go-server/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +67,11 @@
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.tslint" />
     <property name="ts.external.directory.path" value="C:\Users\Libor\Documents\Programming\Furion-Media-Server\client\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Libor\Documents\Programming\Furion-Media-Server\client\src\components\nav" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
@@ -82,7 +103,9 @@
       <workItem from="1608494327321" duration="223000" />
       <workItem from="1608588894627" duration="16901000" />
       <workItem from="1608619898177" duration="11226000" />
-      <workItem from="1608674031733" duration="8947000" />
+      <workItem from="1608674031733" duration="10149000" />
+      <workItem from="1608760352228" duration="5964000" />
+      <workItem from="1608773854990" duration="7433000" />
     </task>
     <servers />
   </component>
